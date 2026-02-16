@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import web.dao.CarDao;
 import web.model.Car;
+import web.service.CarService;
 import web.service.CarServiceImpl;
 
 import java.util.List;
@@ -14,11 +16,11 @@ import java.util.List;
 public class CarsController {
 
     @Autowired
-    private CarServiceImpl carService;
+    private CarService carService;
 
     @GetMapping(value = "/cars")
     public String printCars(@RequestParam(value = "count", defaultValue = "5") int count, Model model) {
-        List<Car> carList = carService.getCarSublist(carService.getCarList(),count);
+        List<Car> carList = carService.getCarsByCount(carService.getAllCars(),count);
         model.addAttribute("carList", carList);
         return "carsView";
     }
